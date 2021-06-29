@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 public class NoteDescriptionFragment extends Fragment {
 
-    private static final String ARG_INDEX = "index";
+    public static final String ARG_INDEX = "index";
     private int index;
 
 

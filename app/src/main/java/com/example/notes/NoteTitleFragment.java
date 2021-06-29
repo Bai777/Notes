@@ -1,5 +1,6 @@
 package com.example.notes;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,18 @@ public class NoteTitleFragment extends Fragment {
             textViewNotesTitle.setText(notes);
             textViewNotesTitle.setTextSize(20);
             linearLayout.addView(textViewNotesTitle);
+                final int NUM = i;
+                textViewNotesTitle.setOnClickListener(v -> {
+                   showPortNoteAndData(NUM);
+                });
         }
+    }
+
+    private void showPortNoteAndData(int num) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), DisplayingTheDescriptionOfNotes.class);
+        intent.putExtra(NoteDescriptionFragment.ARG_INDEX, num);
+        startActivity(intent);
+
     }
 }
