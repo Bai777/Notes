@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="note_title">
+        <item>Название1</item>
+        <item>Название2</item>
+        <item>Название3</item>
+        <item>Название4</item>
+        <item>Название5</item>
+        <item>Название6</item>
+        <item>Название7</item>
+    </array>
+</resources>
