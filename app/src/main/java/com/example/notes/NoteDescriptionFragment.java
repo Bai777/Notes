@@ -1,6 +1,6 @@
 package com.example.notes;
 
-import android.content.res.TypedArray;
+
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatTextView;

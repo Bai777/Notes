@@ -3,13 +3,9 @@ package com.example.notes;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +14,8 @@ import android.widget.TextView;
 
 
 public class NoteTitleFragment extends Fragment {
-
+    public static final String CURRENT_NOTE = "CurrentNote";
+    private int currentPosition = 0;
     private boolean isLandscape;
 
     @Override
@@ -35,7 +32,7 @@ public class NoteTitleFragment extends Fragment {
     }
 
     private void initList(View view) {
-        LinearLayout linearLayout = (LinearLayout)view;
+        LinearLayout linearLayout = (LinearLayout) view;
         String[] notesTitle = getResources().getStringArray(R.array.note_title);
         for (int i = 0; i < notesTitle.length; i++) {
             String notes = notesTitle[i];
@@ -43,12 +40,20 @@ public class NoteTitleFragment extends Fragment {
             textViewNotesTitle.setText(notes);
             textViewNotesTitle.setTextSize(20);
             linearLayout.addView(textViewNotesTitle);
-                final int NUM = i;
-                textViewNotesTitle.setOnClickListener(v -> {
-                   showNoteAndData(NUM);
-                });
+            final int NUM = i;
+            textViewNotesTitle.setOnClickListener(v -> {
+               currentPosition = NUM;
+                showNoteAndData(currentPosition);
+            });
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT_NOTE, currentPosition);
+    }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -57,31 +62,30 @@ public class NoteTitleFragment extends Fragment {
         isLandscape = getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
 
+        if (savedInstanceState != null) {
+            currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
+        }
+
         if (isLandscape) {
-            showLandNoteAndData(0);
+            showLandNoteAndData(currentPosition);
         }
     }
 
     private void showNoteAndData(int num) {
-            if (isLandscape){
-                showLandNoteAndData(num);
-            }
-            else showPortNoteAndData(num);
+        if (isLandscape) {
+            showLandNoteAndData(num);
+        } else {
+            showPortNoteAndData(num);
+        }
     }
 
     private void showLandNoteAndData(int num) {
         NoteDescriptionFragment displayNotes = NoteDescriptionFragment.newInstance(num);
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.landDisplayDescriptAndData, displayNotes);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.commit();
-
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.landDisplayDescriptAndData, displayNotes).commit();
     }
 
     private void showPortNoteAndData(int num) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), DisplayingTheDescriptionOfNotes.class);
+        Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
         intent.putExtra(NoteDescriptionFragment.ARG_INDEX, num);
         startActivity(intent);
 
