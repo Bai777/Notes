@@ -1,7 +1,9 @@
 package com.example.notes;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -27,14 +29,21 @@ public class NoteDescriptionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            index = getArguments().getInt(ARG_INDEX);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_note_description, container, false);
+
+        View view =  inflater.inflate(R.layout.fragment_note_description, container, false);
+        AppCompatTextView textViewNoteDescription = view.findViewById(R.id.textViewNoteDescription);
+        AppCompatTextView textViewNoteCreateData = view.findViewById(R.id.textViewNoteCreateData);
+        String[] noteDescription = getResources().getStringArray(R.array.note_description);
+        String[] noteCreateData = getResources().getStringArray(R.array.date_the_note_was_created);
+        textViewNoteDescription.setText(noteDescription[index]);
+        textViewNoteCreateData.setText(noteCreateData[index]);
+        return view;
     }
 }
