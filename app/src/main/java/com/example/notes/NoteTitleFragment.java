@@ -1,11 +1,14 @@
 package com.example.notes;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,7 @@ import android.widget.TextView;
 
 public class NoteTitleFragment extends Fragment {
 
-
+    private boolean isLandscape;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,9 +45,38 @@ public class NoteTitleFragment extends Fragment {
             linearLayout.addView(textViewNotesTitle);
                 final int NUM = i;
                 textViewNotesTitle.setOnClickListener(v -> {
-                   showPortNoteAndData(NUM);
+                   showNoteAndData(NUM);
                 });
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        isLandscape = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+
+        if (isLandscape) {
+            showLandNoteAndData(0);
+        }
+    }
+
+    private void showNoteAndData(int num) {
+            if (isLandscape){
+                showLandNoteAndData(num);
+            }
+            else showPortNoteAndData(num);
+    }
+
+    private void showLandNoteAndData(int num) {
+        NoteDescriptionFragment displayNotes = NoteDescriptionFragment.newInstance(num);
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.landDisplayDescriptAndData, displayNotes);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
+
     }
 
     private void showPortNoteAndData(int num) {
