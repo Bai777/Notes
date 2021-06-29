@@ -16,5 +16,14 @@ public class DisplayingTheDescriptionOfNotes extends AppCompatActivity {
             finish();
             return;
         }
+
+        if (savedInstanceState == null){
+            NoteDescriptionFragment displayNotes = new NoteDescriptionFragment();
+            displayNotes.setArguments(getIntent().getExtras());
+            // Добавим фрагмент на activity
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.displayNotesAndData, displayNotes).commit();
+        }
     }
 }
