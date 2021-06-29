@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="note_title">
-        <item>Название1</item>
-        <item>Название2</item>
-        <item>Название3</item>
-        <item>Название4</item>
-        <item>Название5</item>
-        <item>Название6</item>
-        <item>Название7</item>
+        <item>Название 1</item>
+        <item>Название 2</item>
+        <item>Название 3</item>
+        <item>Название 4</item>
+        <item>Название 5</item>
+        <item>Название 6</item>
+        <item>Название 7</item>
     </string-array>
 </resources>
