@@ -48,6 +48,7 @@ public class NoteTitleFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
