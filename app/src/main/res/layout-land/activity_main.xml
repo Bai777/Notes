@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/notes_title"
         android:name="com.example.notes.NoteTitleFragment"
         android:layout_width="@dimen/widthLandNoteTitle"
