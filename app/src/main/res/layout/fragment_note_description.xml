@@ -12,12 +12,14 @@
         android:id="@+id/textViewNoteDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeDescriptionNote"
         android:layout_gravity="center"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewNoteCreateData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeDescriptionNote"
         android:layout_gravity="center"/>
 
     <DatePicker

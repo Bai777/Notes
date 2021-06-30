@@ -38,7 +38,7 @@ public class NoteTitleFragment extends Fragment {
             String notes = notesTitle[i];
             TextView textViewNotesTitle = new TextView(getContext());
             textViewNotesTitle.setText(notes);
-            textViewNotesTitle.setTextSize(20);
+            textViewNotesTitle.setTextSize(30);
             linearLayout.addView(textViewNotesTitle);
             final int NUM = i;
             textViewNotesTitle.setOnClickListener(v -> {

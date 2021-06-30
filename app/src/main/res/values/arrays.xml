@@ -18,13 +18,13 @@
         <item>Описание заметки 6</item>
         <item>Описание заметки 7</item>
     </string-array>
-    <string-array name="date_the_note_was_created">
-        <item>Дата создания 1 заметки</item>
-        <item>Дата создания 2 заметки</item>
-        <item>Дата создания 3 заметки</item>
-        <item>Дата создания 4 заметки</item>
-        <item>Дата создания 5 заметки</item>
-        <item>Дата создания 6 заметки</item>
-        <item>Дата создания 7 заметки</item>
-    </string-array>
+<!--    <string-array name="date_the_note_was_created">-->
+<!--        <item>Дата создания 1 заметки</item>-->
+<!--        <item>Дата создания 2 заметки</item>-->
+<!--        <item>Дата создания 3 заметки</item>-->
+<!--        <item>Дата создания 4 заметки</item>-->
+<!--        <item>Дата создания 5 заметки</item>-->
+<!--        <item>Дата создания 6 заметки</item>-->
+<!--        <item>Дата создания 7 заметки</item>-->
+<!--    </string-array>-->
 </resources>

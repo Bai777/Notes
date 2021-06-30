@@ -47,7 +47,7 @@ public class NoteDescriptionFragment extends Fragment {
         AppCompatTextView textViewNoteDescription = view.findViewById(R.id.textViewNoteDescription);
         textViewNoteCreateData = view.findViewById(R.id.textViewNoteCreateData);
         String[] noteDescription = getResources().getStringArray(R.array.note_description);
-        String[] noteCreateData = getResources().getStringArray(R.array.date_the_note_was_created);
+//        String[] noteCreateData = getResources().getStringArray(R.array.date_the_note_was_created);
         textViewNoteDescription.setText(noteDescription[index]);
         //textViewNoteCreateData.setText(noteCreateData[index]);
 
