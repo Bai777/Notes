@@ -1,6 +1,8 @@
 package com.example.notes;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -20,6 +22,10 @@ public class NoteDescriptionFragment extends Fragment {
     private int index;
     private DatePicker datePicker;
     private AppCompatTextView textViewNoteCreateData;
+    public static final String DATA_SAVE = "data_save";
+    public static final String DATA = "data";
+    SharedPreferences saveData;
+
 
 
     public static NoteDescriptionFragment newInstance(int index) {
@@ -33,6 +39,7 @@ public class NoteDescriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_INDEX);
         }
@@ -41,6 +48,7 @@ public class NoteDescriptionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
 
         View view = inflater.inflate(R.layout.fragment_note_description, container, false);
@@ -52,6 +60,16 @@ public class NoteDescriptionFragment extends Fragment {
         //textViewNoteCreateData.setText(noteCreateData[index]);
 
         datePicker = view.findViewById(R.id.datePicker);
+
+        saveData = getActivity().getSharedPreferences(DATA_SAVE, Context.MODE_PRIVATE);
+        String data = textViewNoteCreateData.getText().toString();
+        SharedPreferences.Editor editor = saveData.edit();
+        editor.putString(DATA, data).apply();
+
+        if (saveData.contains(DATA)){
+            textViewNoteCreateData.setText(saveData.getString(DATA, ""));
+        }
+
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -68,5 +86,6 @@ public class NoteDescriptionFragment extends Fragment {
     private void datePickerChange(DatePicker datePicker, int year, int month, int dayOfMonth) {
 //            Log.d("Date", "Year=" + year + " Month=" + (month + 1) + " day=" + dayOfMonth);
         textViewNoteCreateData.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+
     }
 }
