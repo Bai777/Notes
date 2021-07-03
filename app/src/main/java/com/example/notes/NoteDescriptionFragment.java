@@ -1,6 +1,7 @@
 package com.example.notes;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -8,9 +9,13 @@ import androidx.fragment.app.Fragment;
 
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -55,6 +60,42 @@ public class NoteDescriptionFragment extends Fragment {
         textViewNoteDescription.setText(noteDescription[index]);
         //textViewNoteCreateData.setText(noteCreateData[index]);
 
+        initPopupMenu(view);
+
+        return initiDatePicker(view);
+    }
+
+    private void initPopupMenu(View view) {
+        AppCompatTextView textViewNoteDescription = view.findViewById(R.id.textViewNoteDescription);
+        textViewNoteDescription.setOnClickListener(v -> {
+            Activity activity = requireActivity();
+            PopupMenu popupMenu = new PopupMenu(activity, v);
+            activity.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+//            Menu menu = popupMenu.getMenu();
+//            menu.findItem(R.id.item2_popup).setVisible(false);
+//            menu.add(0, 123456, 12, R.string.new_menu_item_added);
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int id = item.getItemId();
+                switch (id) {
+                    case R.id.item1_popup:
+                        Toast.makeText(activity, "popup1", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.item2_popup:
+                        Toast.makeText(activity, "popup2", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.item3_popup:
+                        Toast.makeText(activity, "popup3", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return true;
+            });
+            popupMenu.show();
+
+        });
+    }
+
+
+    private View initiDatePicker(View view) {
         datePicker = view.findViewById(R.id.datePicker);
 
         Calendar calendar = Calendar.getInstance();
