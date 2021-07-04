@@ -11,8 +11,10 @@
     <string name="popup1">popup1</string>
     <string name="popup2">popup2</string>
     <string name="popup3">popup3</string>
-    <string name="new_menu_item_added">Menu item added</string>
-    <string name="fragment_navigation">fragment_navigation</string>
+
+    <!--ресурсы меню drawer-->
+    <string name="fragment_navigation">Степан.
+        Андроид разработчик;)</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
