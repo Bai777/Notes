@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.R;
 
-import org.jetbrains.annotations.NotNull;
 
 public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapter.ViewHolder> {
 
