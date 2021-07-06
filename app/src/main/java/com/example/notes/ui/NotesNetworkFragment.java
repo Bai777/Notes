@@ -49,7 +49,7 @@ public class NotesNetworkFragment extends Fragment {
 
         // Установим слушателя
         adapter.SetOnItemClickListener((view, position) ->
-//                Toast.makeText(getContext(), String.format("%s - %d", ((TextView)view).getText(), position), Toast.LENGTH_SHORT).show());
-        noteTitleFragment.showPortNoteAndData(position));
+                Toast.makeText(getContext(), String.format("%s - %d", ((TextView)view).getText(), position), Toast.LENGTH_SHORT).show());
+//        noteTitleFragment.showPortNoteAndData(position));
     }
 }
