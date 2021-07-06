@@ -17,5 +17,6 @@
         Андроид разработчик;)</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="list_item">List_item</string>
 
 </resources>
