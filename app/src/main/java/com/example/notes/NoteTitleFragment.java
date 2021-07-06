@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,7 @@ public class NoteTitleFragment extends Fragment {
         // При помощи этого объекта будем доставать элементы, спрятанные в item.xml
         LayoutInflater inflater = getLayoutInflater();
 
-        // В этом цикле ищем элемент TextView в item.xml,
+        // В этом цикле ищем элемент TextView в list_item.xml,
         // заполняем его значениями
         // и добавляем на экран item.xml.
         // Кроме того, создаём обработку касания на элемент
@@ -49,18 +51,18 @@ public class NoteTitleFragment extends Fragment {
 //            textViewNotesTitle.setText(notes);
 //            textViewNotesTitle.setTextSize(30);
 //            linearLayout.addView(textViewNotesTitle);
-            // Достаём элемент из item.xml
+            // Достаём элемент из list_item.xml
             View item = inflater.inflate(R.layout.list_item, linearLayout, false);
             // Находим в этом элементе TextView
             TextView tv = item.findViewById(R.id.textView);
             tv.setText(notes);
             linearLayout.addView(item);
 
-            final int NUM = i;
-            tv.setOnClickListener(v -> {
-               currentPosition = NUM;
-                showNoteAndData(currentPosition);
-            });
+//            final int NUM = i;
+//            tv.setOnClickListener(v -> {
+//               currentPosition = NUM;
+//                showNoteAndData(currentPosition);
+//            });
         }
     }
 
@@ -96,12 +98,12 @@ public class NoteTitleFragment extends Fragment {
         }
     }
 
-    private void showLandNoteAndData(int num) {
+    public void showLandNoteAndData(int num) {
         NoteDescriptionFragment displayNotes = NoteDescriptionFragment.newInstance(num);
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.landDisplayDescriptAndData, displayNotes).commit();
     }
 
-    private void showPortNoteAndData(int num) {
+    public void showPortNoteAndData(int num) {
         Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
         intent.putExtra(NoteDescriptionFragment.ARG_INDEX, num);
         startActivity(intent);

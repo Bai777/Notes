@@ -1,8 +1,10 @@
 package com.example.notes.ui;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,8 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
 
 
     private String[] dataSource;
+    private OnItemClickListener itemClickListener;  // Слушатель будет устанавливаться извне
+
 
     // Передаём в конструктор источник данных
     public NotesNetworkAdapter(String[] dataSource) {
@@ -47,6 +51,17 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         return dataSource.length;
     }
 
+    // Сеттер слушателя нажатий
+    public void SetOnItemClickListener(OnItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
+
+    // Интерфейс для обработки нажатий, как в ListView
+    public interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
+
+
     // Этот класс хранит связь между данными и элементами View
     // Сложные данные могут потребовать несколько View на один пункт списка
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +71,18 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
+            // Обработчик нажатий на этом ViewHolder
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        itemClickListener.onItemClick(v, getAdapterPosition());
+                    }
+                }
+            });
         }
+
+
 
         public TextView getTextView() {
             return textView;

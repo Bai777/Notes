@@ -4,15 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notes.NoteTitleFragment;
 import com.example.notes.R;
 
 
 public class NotesNetworkFragment extends Fragment {
+    NoteTitleFragment noteTitleFragment = new NoteTitleFragment();
 
     public static NotesNetworkFragment newInstance() {
         return new NotesNetworkFragment();
@@ -43,5 +47,9 @@ public class NotesNetworkFragment extends Fragment {
         NotesNetworkAdapter adapter = new NotesNetworkAdapter(data);
         recyclerView.setAdapter(adapter);
 
+        // Установим слушателя
+        adapter.SetOnItemClickListener((view, position) ->
+//                Toast.makeText(getContext(), String.format("%s - %d", ((TextView)view).getText(), position), Toast.LENGTH_SHORT).show());
+        noteTitleFragment.showPortNoteAndData(position));
     }
 }
