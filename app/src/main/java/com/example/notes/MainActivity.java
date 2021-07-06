@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         //Получить менеджер фрагментов
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.recycler_view_lines, fragment).addToBackStack(null).commit();
+        fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 
     private void initView() {

@@ -55,7 +55,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView)itemView;
+            textView = itemView.findViewById(R.id.textView);
         }
 
         public TextView getTextView() {
