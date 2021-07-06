@@ -4,5 +4,6 @@
     <dimen name="textSizeDescriptionNote">30sp</dimen>
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="nav_header_dimen">30sp</dimen>
+    <dimen name="sizeItemList">30sp</dimen>
 
 </resources>
