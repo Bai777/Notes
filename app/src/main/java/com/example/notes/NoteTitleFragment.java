@@ -34,14 +34,30 @@ public class NoteTitleFragment extends Fragment {
     private void initList(View view) {
         LinearLayout linearLayout = (LinearLayout) view;
         String[] notesTitle = getResources().getStringArray(R.array.note_title);
+
+        // При помощи этого объекта будем доставать элементы, спрятанные в item.xml
+        LayoutInflater inflater = getLayoutInflater();
+
+        // В этом цикле ищем элемент TextView в item.xml,
+        // заполняем его значениями
+        // и добавляем на экран item.xml.
+        // Кроме того, создаём обработку касания на элемент
         for (int i = 0; i < notesTitle.length; i++) {
             String notes = notesTitle[i];
-            TextView textViewNotesTitle = new TextView(getContext());
-            textViewNotesTitle.setText(notes);
-            textViewNotesTitle.setTextSize(30);
-            linearLayout.addView(textViewNotesTitle);
+
+//            TextView textViewNotesTitle = new TextView(getContext());
+//            textViewNotesTitle.setText(notes);
+//            textViewNotesTitle.setTextSize(30);
+//            linearLayout.addView(textViewNotesTitle);
+            // Достаём элемент из item.xml
+            View item = inflater.inflate(R.layout.list_item, linearLayout, false);
+            // Находим в этом элементе TextView
+            TextView tv = item.findViewById(R.id.textView);
+            tv.setText(notes);
+            linearLayout.addView(item);
+
             final int NUM = i;
-            textViewNotesTitle.setOnClickListener(v -> {
+            tv.setOnClickListener(v -> {
                currentPosition = NUM;
                 showNoteAndData(currentPosition);
             });
