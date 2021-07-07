@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.notes.NoteDescriptionFragment;
 import com.example.notes.NoteTitleFragment;
 import com.example.notes.R;
 import com.example.notes.data.CardsSource;
@@ -25,7 +26,7 @@ import com.example.notes.data.CardsSourceImpl;
 
 
 public class NotesNetworkFragment extends Fragment {
-//    NoteTitleFragment noteTitleFragment = new NoteTitleFragment();
+
 
     public static NotesNetworkFragment newInstance() {
         return new NotesNetworkFragment();
@@ -68,8 +69,9 @@ public class NotesNetworkFragment extends Fragment {
 
         // Установим слушателя
         adapter.SetOnItemClickListener((view, position) -> {
-            Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
 //                Log.d("log", position+"");
+
 
         });
 

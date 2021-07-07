@@ -60,15 +60,15 @@ public class NoteTitleFragment extends Fragment {
             // Достаём элемент из list_item.xml
             View item = inflater.inflate(R.layout.list_item, linearLayout, false);
             // Находим в этом элементе TextView
-           // TextView tv = item.findViewById(R.id.title);
-//            tv.setText(notes);
-//            linearLayout.addView(item);
+            TextView tv = item.findViewById(R.id.title);
+            tv.setText(notes);
+            linearLayout.addView(item);
 
-//            final int NUM = i;
-//            tv.setOnClickListener(v -> {
-//               currentPosition = NUM;
-//                showNoteAndData(currentPosition);
-//            });
+            final int NUM = i;
+            tv.setOnClickListener(v -> {
+               currentPosition = NUM;
+                showNoteAndData(currentPosition);
+            });
         }
     }
 
