@@ -1,5 +1,6 @@
 package com.example.notes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -14,11 +15,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.notes.ui.NotesNetworkFragment;
+
 
 public class NoteTitleFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
     private int currentPosition = 0;
     private boolean isLandscape;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +36,8 @@ public class NoteTitleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initList(view);
     }
+
+
 
     private void initList(View view) {
         LinearLayout linearLayout = (LinearLayout) view;
