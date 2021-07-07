@@ -35,7 +35,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         // Создаём новый элемент пользовательского интерфейса
         // Через Inflater
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, viewGroup, false);
-        Log.d("log", "onCreateViewHolder");
+//        Log.d("log", "onCreateViewHolder");
         return new ViewHolder(view);
     }
 
@@ -46,7 +46,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         // Получить элемент из источника данных (БД, интернет...)
         // Вынести на экран, используя ViewHolder
         viewHolder.setData(dataSource.getCardData(position));
-        Log.d("log", "onBindViewHolder");
+//        Log.d("log", "onBindViewHolder");
 
     }
 

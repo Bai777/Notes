@@ -1,10 +1,11 @@
 package com.example.notes.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -13,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.NoteTitleFragment;
 import com.example.notes.R;
+import com.example.notes.data.CardsSource;
+import com.example.notes.data.CardsSourceImpl;
 
 
 public class NotesNetworkFragment extends Fragment {
-    NoteTitleFragment noteTitleFragment = new NoteTitleFragment();
+//    NoteTitleFragment noteTitleFragment = new NoteTitleFragment();
 
     public static NotesNetworkFragment newInstance() {
         return new NotesNetworkFragment();
@@ -29,14 +32,16 @@ public class NotesNetworkFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_note_title, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
-        String[] data = getResources().getStringArray(R.array.note_title);
+        // Получим источник данных для списка
+        CardsSource data = new CardsSourceImpl(getResources()).init();
         initRecyclerView(recyclerView, data);
         return view;
 
     }
 
-    private void initRecyclerView(RecyclerView recyclerView, String[] data) {
-    // Эта установка служит для повышения производительности системы
+    @SuppressLint("DefaultLocale")
+    private void initRecyclerView(RecyclerView recyclerView, CardsSource data) {
+        // Эта установка служит для повышения производительности системы
         recyclerView.setHasFixedSize(true);
 
         // Будем работать со встроенным менеджером
@@ -48,8 +53,15 @@ public class NotesNetworkFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         // Установим слушателя
-        adapter.SetOnItemClickListener((view, position) ->
-                Toast.makeText(getContext(), String.format("%s - %d", ((TextView)view).getText(), position), Toast.LENGTH_SHORT).show());
-//        noteTitleFragment.showPortNoteAndData(position));
+        adapter.SetOnItemClickListener(new NotesNetworkAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
+//                Log.d("log", position+"");
+            }
+        });
+
     }
+//        noteTitleFragment.showPortNoteAndData(position));
+
 }

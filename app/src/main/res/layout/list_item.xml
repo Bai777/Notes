@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="Title"
+                android:text="@string/title_cadrView"
                 android:textSize="@dimen/textTitle" />
         </LinearLayout>
 
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Description"
+            android:text="@string/description_cadrView"
             android:textSize="@dimen/textDescription" />
 
     </LinearLayout>

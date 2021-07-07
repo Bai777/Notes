@@ -34,6 +34,8 @@
     <string name="description5">ТТХ: ППС-1</string>
     <string name="description6">ТТХ: СВД</string>
     <string name="description7">ТТХ: ВСС</string>
+    <string name="title_cadrView">Title</string>
+    <string name="description_cadrView">Description</string>
 
 
 </resources>
