@@ -1,21 +1,26 @@
 package com.example.notes.ui;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notes.NoteTitleFragment;
+
 import com.example.notes.R;
 import com.example.notes.data.CardsSource;
 import com.example.notes.data.CardsSourceImpl;
+
+
 
 
 public class NotesNetworkFragment extends Fragment {
@@ -26,6 +31,7 @@ public class NotesNetworkFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,7 +45,8 @@ public class NotesNetworkFragment extends Fragment {
 
     }
 
-    @SuppressLint("DefaultLocale")
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @SuppressLint({"DefaultLocale", "UseCompatLoadingForDrawables"})
     private void initRecyclerView(RecyclerView recyclerView, CardsSource data) {
         // Эта установка служит для повышения производительности системы
         recyclerView.setHasFixedSize(true);
@@ -52,13 +59,16 @@ public class NotesNetworkFragment extends Fragment {
         NotesNetworkAdapter adapter = new NotesNetworkAdapter(data);
         recyclerView.setAdapter(adapter);
 
+        // Добавим разделитель карточек
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),  LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator, null));
+        recyclerView.addItemDecoration(itemDecoration);
+
+
         // Установим слушателя
-        adapter.SetOnItemClickListener(new NotesNetworkAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
+        adapter.SetOnItemClickListener((view, position) -> {
+            Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
 //                Log.d("log", position+"");
-            }
         });
 
     }
