@@ -12,27 +12,28 @@
     <string name="popup2">popup2</string>
     <string name="popup3">popup3</string>
 
-    <!--ресурсы для CardView-->-->
+
     <string name="fragment_navigation">Степан.
         Андроид разработчик;)</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="list_item">List_item</string>
 
-    <string name="title1">Зелёный лес</string>
-    <string name="title2">Гора</string>
-    <string name="title3">Водопад</string>
-    <string name="title4">Небо</string>
-    <string name="title5">Туман</string>
-    <string name="title6">Поляна</string>
-    <string name="title7">Осень</string>
-    <string name="description1">Сказочный зелёный лес</string>
-    <string name="description2">Одинокая гора</string>
-    <string name="description3">Бурный водопад в лесу</string>
-    <string name="description4">Красивое сумрачное небо</string>
-    <string name="description5">Мистический туман</string>
-    <string name="description6">Солнечная поляна</string>
-    <string name="description7">Красная осень</string>
+    <!--ресурсы для CardView-->
+    <string name="title1">АК-74</string>
+    <string name="title2">Беретта</string>
+    <string name="title3">АПС</string>
+    <string name="title4">ГШ-18</string>
+    <string name="title5">ППС-1</string>
+    <string name="title6">СВД</string>
+    <string name="title7">ВСС</string>
+    <string name="description1">ТТХ: АК-74</string>
+    <string name="description2">ТТХ: Беретта</string>
+    <string name="description3">ТТХ: АПС</string>
+    <string name="description4">ТТХ: ГШ-18</string>
+    <string name="description5">ТТХ: ППС-1</string>
+    <string name="description6">ТТХ: СВД</string>
+    <string name="description7">ТТХ: ВСС</string>
 
 
 </resources>
