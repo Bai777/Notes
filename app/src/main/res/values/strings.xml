@@ -12,11 +12,27 @@
     <string name="popup2">popup2</string>
     <string name="popup3">popup3</string>
 
-    <!--ресурсы меню drawer-->
+    <!--ресурсы для CardView-->-->
     <string name="fragment_navigation">Степан.
         Андроид разработчик;)</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="list_item">List_item</string>
+
+    <string name="title1">Зелёный лес</string>
+    <string name="title2">Гора</string>
+    <string name="title3">Водопад</string>
+    <string name="title4">Небо</string>
+    <string name="title5">Туман</string>
+    <string name="title6">Поляна</string>
+    <string name="title7">Осень</string>
+    <string name="description1">Сказочный зелёный лес</string>
+    <string name="description2">Одинокая гора</string>
+    <string name="description3">Бурный водопад в лесу</string>
+    <string name="description4">Красивое сумрачное небо</string>
+    <string name="description5">Мистический туман</string>
+    <string name="description6">Солнечная поляна</string>
+    <string name="description7">Красная осень</string>
+
 
 </resources>
