@@ -26,6 +26,12 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
     private OnItemClickListener itemClickListener;  // Слушатель будет устанавливаться извне
     private Fragment fragment;
 
+    public int getMenuPosition() {
+        return menuPosition;
+    }
+
+    private int menuPosition;
+
     // Передаём в конструктор источник данных
     public NotesNetworkAdapter(CardsSource dataSource, Fragment fragment) {
         this.dataSource = dataSource;
@@ -105,6 +111,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public boolean onLongClick(View v) {
+                    menuPosition = getLayoutPosition();
                     itemView.showContextMenu(10, 10);
                     return true;
                 }

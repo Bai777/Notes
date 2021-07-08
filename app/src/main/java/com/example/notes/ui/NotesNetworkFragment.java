@@ -43,6 +43,7 @@ public class NotesNetworkFragment extends Fragment {
     private RecyclerView recyclerView;
     private boolean isLandscape;
 
+
     public static NotesNetworkFragment newInstance() {
         return new NotesNetworkFragment();
     }
@@ -161,14 +162,22 @@ public class NotesNetworkFragment extends Fragment {
         inflater.inflate(R.menu.contex_menu, menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = adapter.getMenuPosition();
         switch (item.getItemId()){
             case R.id.action_update:
-                Toast.makeText(getContext(), "Update your app", Toast.LENGTH_SHORT).show();
+                data.updateCardData(position,
+                        new CardData("Frame " + position,
+                                data.getCardData(position).getDescription(),
+                                data.getCardData(position).getPicture(),
+                                false));
+                adapter.notifyItemChanged(position);
                 return true;
             case R.id.action_delete:
-                Toast.makeText(getContext(), "Delete your cardView", Toast.LENGTH_SHORT).show();
+                data.deleteCardData(position);
+                adapter.notifyItemRemoved(position);
                 return true;
         }
         return super.onContextItemSelected(item);
