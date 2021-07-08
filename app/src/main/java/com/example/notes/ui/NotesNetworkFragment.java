@@ -8,10 +8,14 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -23,14 +27,18 @@ import com.example.notes.DisplayingTheDescriptionOfNotes;
 import com.example.notes.NoteDescriptionFragment;
 import com.example.notes.NoteTitleFragment;
 import com.example.notes.R;
+import com.example.notes.data.CardData;
 import com.example.notes.data.CardsSource;
 import com.example.notes.data.CardsSourceImpl;
 
-
+import org.jetbrains.annotations.NotNull;
 
 
 public class NotesNetworkFragment extends Fragment {
 
+    private CardsSource data;
+    private NotesNetworkAdapter adapter;
+    private RecyclerView recyclerView;
     private boolean isLandscape;
 
     public static NotesNetworkFragment newInstance() {
@@ -46,15 +54,50 @@ public class NotesNetworkFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_note_title, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
         // Получим источник данных для списка
-        CardsSource data = new CardsSourceImpl(getResources()).init();
-        initRecyclerView(recyclerView, data);
+        data = new CardsSourceImpl(getResources()).init();
+
+        initView(view);
+
+        setHasOptionsMenu(true);
         return view;
 
     }
 
+
+    //создаём cards_menu меню
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.cards_menu, menu);
+    }
+
+    //обработка нажатия cards_menu
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                data.addCardData(new CardData("Заголовок " + data.size(), "Описание " + data.size(), R.drawable.ak_74, false));
+                adapter.notifyItemInserted(data.size() - 1);
+                recyclerView.scrollToPosition(data.size() - 1);
+                return true;
+            case R.id.action_clear:
+                data.clearCardData();
+                adapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void initView(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view_lines);
+        // Получим источник данных для списка
+        data = new CardsSourceImpl(getResources()).init();
+        initRecyclerView();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint({"DefaultLocale", "UseCompatLoadingForDrawables"})
-    private void initRecyclerView(RecyclerView recyclerView, CardsSource data) {
+    private void initRecyclerView() {
         // Эта установка служит для повышения производительности системы
         recyclerView.setHasFixedSize(true);
 
@@ -63,11 +106,11 @@ public class NotesNetworkFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         // Установим адаптер
-        NotesNetworkAdapter adapter = new NotesNetworkAdapter(data);
+        adapter = new NotesNetworkAdapter(data);
         recyclerView.setAdapter(adapter);
 
         // Добавим разделитель карточек
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),  LinearLayoutManager.VERTICAL);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(getResources().getDrawable(R.drawable.separator, null));
         recyclerView.addItemDecoration(itemDecoration);
 
@@ -106,7 +149,7 @@ public class NotesNetworkFragment extends Fragment {
     }
 
     public void showLandNoteAndData(int num) {
-        Log.d("log", num+"");
+        Log.d("log", num + "");
         NoteDescriptionFragment displayNotes = NoteDescriptionFragment.newInstance(num);
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.landDisplayDescriptAndData, displayNotes).commit();
     }
