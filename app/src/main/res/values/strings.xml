@@ -6,15 +6,18 @@
     <string name="main">Main</string>
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
+    <string name="add">Add</string>
+    <string name="clear">Clear</string>
 
     <!--ресурсы меню popup-->
     <string name="popup1">popup1</string>
     <string name="popup2">popup2</string>
     <string name="popup3">popup3</string>
 
-
+    <!--ресурсы бокового меню-->
     <string name="fragment_navigation">Степан.
         Андроид разработчик;)</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="list_item">List_item</string>

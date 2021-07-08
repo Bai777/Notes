@@ -33,7 +33,7 @@ public class CardsSourceImpl implements CardsSource {
     }
 
     // Механизм вытаскивания идентификаторов картинок
-    private int[] getImageArray(){
+    private int[] getImageArray() {
         TypedArray pictures = resources.obtainTypedArray(R.array.pictures);
         int length = pictures.length();
         int[] answer = new int[length];
@@ -51,5 +51,25 @@ public class CardsSourceImpl implements CardsSource {
     @Override
     public int size() {
         return dataSource.size();
+    }
+
+    @Override
+    public void deleteCardData(int position) {
+        dataSource.remove(position);
+    }
+
+    @Override
+    public void addCardData(CardData cardData) {
+        dataSource.add(cardData);
+    }
+
+    @Override
+    public void clearCardData() {
+        dataSource.clear();
+    }
+
+    @Override
+    public void updateCardData(int position, CardData cardData) {
+        dataSource.set(position, cardData);
     }
 }
