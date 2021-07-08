@@ -1,6 +1,7 @@
 package com.example.notes.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.notes.DisplayingTheDescriptionOfNotes;
 import com.example.notes.NoteDescriptionFragment;
 import com.example.notes.NoteTitleFragment;
 import com.example.notes.R;
@@ -71,11 +73,12 @@ public class NotesNetworkFragment extends Fragment {
         adapter.SetOnItemClickListener((view, position) -> {
 //            Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
 //                Log.d("log", position+"");
-
+            Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
+            intent.putExtra(NoteDescriptionFragment.ARG_INDEX, position);
+            startActivity(intent);
 
         });
 
     }
-//        noteTitleFragment.showPortNoteAndData(position));
 
 }

@@ -20,9 +20,15 @@ import com.example.notes.ui.NotesNetworkFragment;
 
 public class NoteTitleFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
+
+
+
     private int currentPosition = 0;
     private boolean isLandscape;
 
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
