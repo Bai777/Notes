@@ -26,9 +26,6 @@ public class NoteTitleFragment extends Fragment {
     private int currentPosition = 0;
     private boolean isLandscape;
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,6 +86,7 @@ public class NoteTitleFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         isLandscape = getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;

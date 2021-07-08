@@ -2,9 +2,11 @@ package com.example.notes.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import com.example.notes.data.CardsSourceImpl;
 
 public class NotesNetworkFragment extends Fragment {
 
+    private boolean isLandscape;
 
     public static NotesNetworkFragment newInstance() {
         return new NotesNetworkFragment();
@@ -73,11 +76,45 @@ public class NotesNetworkFragment extends Fragment {
         adapter.SetOnItemClickListener((view, position) -> {
 //            Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
 //                Log.d("log", position+"");
-            Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
-            intent.putExtra(NoteDescriptionFragment.ARG_INDEX, position);
-            startActivity(intent);
+
+
+            showNoteAndData(position);
+
+            isLandscape = getResources().getConfiguration().orientation
+                    == Configuration.ORIENTATION_LANDSCAPE;
+
+            if (isLandscape) {
+                showLandNoteAndData(position);
+            }
+
+
+//            Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
+//            intent.putExtra(NoteDescriptionFragment.ARG_INDEX, position);
+//            startActivity(intent);
+
 
         });
+
+    }
+
+    private void showNoteAndData(int num) {
+        if (isLandscape) {
+            showLandNoteAndData(num);
+        } else {
+            showPortNoteAndData(num);
+        }
+    }
+
+    public void showLandNoteAndData(int num) {
+        Log.d("log", num+"");
+        NoteDescriptionFragment displayNotes = NoteDescriptionFragment.newInstance(num);
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.landDisplayDescriptAndData, displayNotes).commit();
+    }
+
+    public void showPortNoteAndData(int num) {
+        Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
+        intent.putExtra(NoteDescriptionFragment.ARG_INDEX, num);
+        startActivity(intent);
 
     }
 
