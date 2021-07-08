@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.R;
@@ -21,11 +22,12 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
 
     private CardsSource dataSource;
     private OnItemClickListener itemClickListener;  // Слушатель будет устанавливаться извне
-
+    private Fragment fragment;
 
     // Передаём в конструктор источник данных
-    public NotesNetworkAdapter(CardsSource dataSource) {
+    public NotesNetworkAdapter(CardsSource dataSource, Fragment fragment) {
         this.dataSource = dataSource;
+        this.fragment = fragment;
     }
 
     // Создать новый элемент пользовательского интерфейса
@@ -84,6 +86,8 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
             image = itemView.findViewById(R.id.imageView);
             like = itemView.findViewById(R.id.like);
 
+            registerContextMenu(itemView);
+
             // Обработчик нажатий на этом ViewHolder
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,7 +99,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
             });
         }
 
-        public void setData(CardData cardData){
+        public void setData(CardData cardData) {
             title.setText(cardData.getTitle());
             description.setText(cardData.getDescription());
             like.setChecked(cardData.isLike());
@@ -103,6 +107,12 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         }
 
 
+    }
+
+    private void registerContextMenu(View itemView) {
+        if (fragment != null){
+            fragment.registerForContextMenu(itemView);
+        }
     }
 
 }
