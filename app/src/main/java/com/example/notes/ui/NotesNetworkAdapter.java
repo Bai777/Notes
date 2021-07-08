@@ -1,5 +1,6 @@
 package com.example.notes.ui;
 
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,7 +81,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         private CheckBox like;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
@@ -88,13 +90,23 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
 
             registerContextMenu(itemView);
 
-            // Обработчик нажатий на этом ViewHolder
+            // Обработчик нажатий на картинке
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null) {
                         itemClickListener.onItemClick(v, getAdapterPosition());
                     }
+                }
+            });
+
+            //Обработчик долгого нажатия на картинке
+            image.setOnLongClickListener(new View.OnLongClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public boolean onLongClick(View v) {
+                    itemView.showContextMenu(10, 10);
+                    return true;
                 }
             });
         }
