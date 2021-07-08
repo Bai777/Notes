@@ -117,8 +117,6 @@ public class NotesNetworkFragment extends Fragment {
 
         // Установим слушателя
         adapter.SetOnItemClickListener((view, position) -> {
-//            Toast.makeText(getContext(), String.format("Position - %d", position), Toast.LENGTH_SHORT).show();
-//                Log.d("log", position+"");
 
 
             showNoteAndData(position);
@@ -129,12 +127,6 @@ public class NotesNetworkFragment extends Fragment {
             if (isLandscape) {
                 showLandNoteAndData(position);
             }
-
-
-//            Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
-//            intent.putExtra(NoteDescriptionFragment.ARG_INDEX, position);
-//            startActivity(intent);
-
 
         });
 

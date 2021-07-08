@@ -13,4 +13,13 @@
         android:orderInCategory="20"
         android:title="@string/clear"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_update"
+        android:orderInCategory="10"
+        android:title="@string/update"/>
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="20"
+        android:title="@string/delete"/>
+
 </menu>
