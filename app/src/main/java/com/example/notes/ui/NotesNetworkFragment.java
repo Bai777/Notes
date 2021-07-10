@@ -1,6 +1,7 @@
 package com.example.notes.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -27,12 +28,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.notes.DisplayingTheDescriptionOfNotes;
+import com.example.notes.MainActivity;
+import com.example.notes.Navigation;
 import com.example.notes.NoteDescriptionFragment;
 import com.example.notes.NoteTitleFragment;
 import com.example.notes.R;
 import com.example.notes.data.CardData;
 import com.example.notes.data.CardsSource;
 import com.example.notes.data.CardsSourceImpl;
+import com.example.notes.observe.Observer;
+import com.example.notes.observe.Publisher;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,11 +50,27 @@ public class NotesNetworkFragment extends Fragment {
     private boolean isLandscape;
     private static final int MY_DEFAULT_DURATION = 2000;
 
+    private Navigation navigation;
+    private Publisher publisher;
+    // признак, что при повторном открытии фрагмента
+    // (возврате из фрагмента, добавляющего запись)
+    // надо прыгнуть на последнюю запись
+    private boolean moveToLastPosition;
+
 
     public static NotesNetworkFragment newInstance() {
         return new NotesNetworkFragment();
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Получим источник данных для списка
+        // Поскольку onCreateView запускается каждый раз
+        // при возврате в фрагмент, данные надо создавать один раз
+        data = new CardsSourceImpl(getResources()).init();
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -64,8 +85,7 @@ public class NotesNetworkFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_note_title, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
-        // Получим источник данных для списка
-        data = new CardsSourceImpl(getResources()).init();
+
 
         initView(view);
 
@@ -73,6 +93,23 @@ public class NotesNetworkFragment extends Fragment {
         return view;
 
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        MainActivity activity = (MainActivity)context;
+        navigation = activity.getNavigation();
+        publisher = activity.getPublisher();
+    }
+
+    @Override
+    public void onDetach() {
+        navigation = null;
+        publisher = null;
+        super.onDetach();
+    }
+
+
 
 
     //создаём cards_menu меню
@@ -86,10 +123,19 @@ public class NotesNetworkFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                data.addCardData(new CardData("Header " + data.size(), "Description " + data.size(), R.drawable.ak_74, false));
-                adapter.notifyItemInserted(data.size() - 1);
-                recyclerView.smoothScrollToPosition(data.size() - 1);
-               // recyclerView.scrollToPosition(data.size() - 1);
+                navigation.addFragment(CardFragment.newInstance(), true);
+                publisher.subscribe(new Observer() {
+                    @Override
+                    public void updateCardData(CardData cardData) {
+                        data.addCardData(cardData);
+                        adapter.notifyItemInserted(data.size() - 1);
+                        // это сигнал, чтобы вызванный метод onCreateView
+                        // перепрыгнул на конец списка
+                        moveToLastPosition = true;
+                    }
+                });
+
+                // recyclerView.scrollToPosition(data.size() - 1);
                 return true;
             case R.id.action_clear:
                 data.clearCardData();
@@ -132,6 +178,10 @@ public class NotesNetworkFragment extends Fragment {
         animator.setRemoveDuration(MY_DEFAULT_DURATION);
         recyclerView.setItemAnimator(animator);
 
+        if (moveToLastPosition){
+            recyclerView.smoothScrollToPosition(data.size() - 1);
+            moveToLastPosition = false;
+        }
 
 
         // Установим слушателя
@@ -184,12 +234,15 @@ public class NotesNetworkFragment extends Fragment {
         int position = adapter.getMenuPosition();
         switch (item.getItemId()){
             case R.id.action_update:
-                data.updateCardData(position,
-                        new CardData("Frame " + position,
-                                data.getCardData(position).getDescription(),
-                                data.getCardData(position).getPicture(),
-                                false));
-                adapter.notifyItemChanged(position);
+                navigation.addFragment(CardFragment.newInstance(data.getCardData(position)), true);
+                publisher.subscribe(new Observer() {
+                    @Override
+                    public void updateCardData(CardData cardData) {
+                        data.updateCardData(position, cardData);
+                        adapter.notifyItemChanged(position);
+                    }
+                });
+
                 return true;
             case R.id.action_delete:
                 data.deleteCardData(position);

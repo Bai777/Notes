@@ -1,5 +1,6 @@
 package com.example.notes.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.notes.R;
 import com.example.notes.data.CardData;
 import com.example.notes.data.CardsSource;
+
+import java.text.SimpleDateFormat;
 
 
 public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapter.ViewHolder> {
@@ -85,6 +88,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         private TextView description;
         private AppCompatImageView image;
         private CheckBox like;
+        private TextView date;
 
 
         public ViewHolder(@NonNull final View itemView) {
@@ -93,6 +97,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
             description = itemView.findViewById(R.id.description);
             image = itemView.findViewById(R.id.imageView);
             like = itemView.findViewById(R.id.like);
+            date = itemView.findViewById(R.id.date);
 
             registerContextMenu(itemView);
 
@@ -118,11 +123,14 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
             });
         }
 
+        @SuppressLint("SimpleDateFormat")
         public void setData(CardData cardData) {
             title.setText(cardData.getTitle());
             description.setText(cardData.getDescription());
             like.setChecked(cardData.isLike());
             image.setImageResource(cardData.getPicture());
+            date.setText(new SimpleDateFormat("dd-MM-yy").format(cardData.getDate()));
+
         }
 
 

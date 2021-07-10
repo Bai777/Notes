@@ -18,26 +18,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.notes.observe.Publisher;
 import com.example.notes.ui.NotesNetworkFragment;
 import com.google.android.material.navigation.NavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private Navigation navigation;
+    private Publisher publisher = new Publisher();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addFragment(NotesNetworkFragment.newInstance());
+        navigation = new Navigation(getSupportFragmentManager());
+        getNavigation().addFragment(NotesNetworkFragment.newInstance(), false);
         initView();
     }
 
-    private void addFragment(Fragment fragment) {
-        //Получить менеджер фрагментов
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
-    }
 
     private void initView() {
         Toolbar toolbar = initToolbar();
@@ -73,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         return toolbar;
     }
 
@@ -126,6 +127,21 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    public Navigation getNavigation() {
+        return navigation;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+
 
 
 }

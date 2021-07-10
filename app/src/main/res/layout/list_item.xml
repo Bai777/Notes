@@ -48,6 +48,14 @@
             android:layout_weight="1"
             android:text="@string/description_cadrView"
             android:textSize="@dimen/textDescription" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="@string/dateText" />
+
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
