@@ -1,6 +1,7 @@
 package com.example.notes;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import java.text.MessageFormat;
 import java.util.Calendar;
 
 
@@ -110,9 +112,13 @@ public class NoteDescriptionFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("DefaultLocale")
     private void datePickerChange(DatePicker datePicker, int year, int month, int dayOfMonth) {
 //            Log.d("Date", "Year=" + year + " Month=" + (month + 1) + " day=" + dayOfMonth);
-        textViewNoteCreateData.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+//        textViewNoteCreateData.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+//        textViewNoteCreateData.setText(new StringBuilder().append(dayOfMonth).append("-").append(month + 1).append("-").append(year).toString());
+//        textViewNoteCreateData.setText(MessageFormat.format("{0}-{1}-{2}", dayOfMonth, month + 1, year));
+        textViewNoteCreateData.setText(String.format("%d-%d-%d", dayOfMonth, month + 1, year));
     }
 
 

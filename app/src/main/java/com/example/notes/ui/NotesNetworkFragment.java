@@ -43,7 +43,7 @@ public class NotesNetworkFragment extends Fragment {
     private NotesNetworkAdapter adapter;
     private RecyclerView recyclerView;
     private boolean isLandscape;
-    private static final int MY_DEFAULT_DURATION = 1000;
+    private static final int MY_DEFAULT_DURATION = 2000;
 
 
     public static NotesNetworkFragment newInstance() {
