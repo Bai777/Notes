@@ -56,6 +56,12 @@ public class NotesNetworkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        isLandscape = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscape) {
+            showLandNoteAndData(0);
+        }
+
         View view = inflater.inflate(R.layout.fragment_note_title, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
         // Получим источник данных для списка
