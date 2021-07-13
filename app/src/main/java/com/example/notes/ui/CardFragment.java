@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import com.example.notes.MainActivity;
 import com.example.notes.R;
 import com.example.notes.data.CardData;
+import com.example.notes.data.PictureIndexConverter;
 import com.example.notes.observe.Publisher;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -104,16 +105,17 @@ public class CardFragment extends Fragment {
         String title = this.title.getText().toString();
         String description = this.description.getText().toString();
         Date date = getDateFromPicker();
-        int picture;
-        boolean like;
+
         if (cardData != null){
-            picture = cardData.getPicture();
-            like = cardData.isLike();
+            CardData answer;
+            answer = new CardData(title, description,
+                    cardData.getPicture(), cardData.isLike(), date);
+            answer.setId(cardData.getId());
+            return answer;
         }else {
-            picture = R.drawable.ak_74;
-            like = false;
+            int picture = PictureIndexConverter.getPictureByIndex(PictureIndexConverter.randomPictureIndex());
+            return new CardData(title, description, picture, false, date);
         }
-        return new CardData(title, description, picture, like, date);
     }
 
     // Получение даты из DatePicker
