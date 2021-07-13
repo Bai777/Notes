@@ -38,7 +38,7 @@ public class CardSourceFirebaseImpl implements CardsSource {
 
     @Override
     public CardsSource init(final CardsSourceResponse cardsSourceResponse) {
-        // Получить всю коллекцию, отсортированную по полю «Дата»
+        // Получить всю коллекцию, отсортированную по полю (дата)
         collection.orderBy(CardDataMapping.Fields.DATE, Query.Direction.DESCENDING).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     // При удачном считывании данных загрузим список карточек
