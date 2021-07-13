@@ -107,8 +107,7 @@ public class CardFragment extends Fragment {
         Date date = getDateFromPicker();
 
         if (cardData != null){
-            CardData answer;
-            answer = new CardData(title, description,
+            CardData answer = new CardData(title, description,
                     cardData.getPicture(), cardData.isLike(), date);
             answer.setId(cardData.getId());
             return answer;

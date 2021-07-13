@@ -2,11 +2,9 @@ package com.example.notes.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -19,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.notes.R;
 import com.example.notes.data.CardData;
 import com.example.notes.data.CardsSource;
+
 
 import java.text.SimpleDateFormat;
 
@@ -126,6 +125,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
             description.setText(cardData.getDescription());
             like.setChecked(cardData.isLike());
             image.setImageResource(cardData.getPicture());
+//            image.setImageResource(PictureIndexConverter.getPictureByIndex(cardData.getPicture()));
             date.setText(new SimpleDateFormat("dd-MM-yy").format(cardData.getDate()));
 
         }

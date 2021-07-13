@@ -64,11 +64,12 @@ public class NotesNetworkFragment extends Fragment {
         return new NotesNetworkFragment();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+    // берем данные с локального хранилища
+//        data = new CardsSourceImpl(getResources()).init();
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -91,7 +92,7 @@ public class NotesNetworkFragment extends Fragment {
         data = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
             @Override
             public void initialized(CardsSource cardsSource) {
-               // adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
         adapter.setDataSource(data);
