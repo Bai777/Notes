@@ -16,7 +16,7 @@ public class CardDataMapping {
     public static CardData toCardData(String id, Map<String, Object> doc){
         long indexPic = (long)doc.get(Fields.PICTURE);
         Timestamp timeStamp = (Timestamp)doc.get(Fields.DATE);
-        CardData answer = new CardData((String)doc.get(Fields.TITLE),
+        CardData answer = new CardData((String) doc.get(Fields.TITLE),
                 PictureIndexConverter.getPictureByIndex((int) indexPic),
                 (boolean) doc.get(Fields.LIKE),
                 timeStamp.toDate());
