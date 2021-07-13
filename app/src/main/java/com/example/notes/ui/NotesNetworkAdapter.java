@@ -29,16 +29,16 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
     private OnItemClickListener itemClickListener;  // Слушатель будет устанавливаться извне
     private Fragment fragment;
 
-    public int getMenuPosition() {
-        return menuPosition;
-    }
-
     private int menuPosition;
 
     // Передаём в конструктор источник данных
-    public NotesNetworkAdapter(CardsSource dataSource, Fragment fragment) {
-        this.dataSource = dataSource;
+    public NotesNetworkAdapter(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setDataSource(CardsSource dataSource) {
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
 
     // Создать новый элемент пользовательского интерфейса
@@ -140,6 +140,9 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         if (fragment != null){
             fragment.registerForContextMenu(itemView);
         }
+    }
+    public int getMenuPosition() {
+        return menuPosition;
     }
 
 }
