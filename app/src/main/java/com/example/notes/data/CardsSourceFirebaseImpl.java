@@ -16,13 +16,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CardSourceFirebaseImpl implements CardsSource {
+public class CardsSourceFirebaseImpl implements CardsSource {
 
     private static final String CARDS_COLLECTION = "notes";
     Context context;
@@ -55,7 +53,7 @@ public class CardSourceFirebaseImpl implements CardsSource {
                                 cardsData.add(cardData);
                             }
 
-                            cardsSourceResponse.initialized(CardSourceFirebaseImpl.this);
+                            cardsSourceResponse.initialized(CardsSourceFirebaseImpl.this);
                         } else {
                             Toast.makeText(context, (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
                         }

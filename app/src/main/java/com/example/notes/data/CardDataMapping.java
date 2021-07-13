@@ -1,6 +1,6 @@
 package com.example.notes.data;
 
-import java.sql.Timestamp;
+import com.google.firebase.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +17,7 @@ public class CardDataMapping {
         long indexPic = (long)doc.get(Fields.PICTURE);
         Timestamp timeStamp = (Timestamp)doc.get(Fields.DATE);
         CardData answer = new CardData((String) doc.get(Fields.TITLE),
+                (String) doc.get(Fields.DESCRIPTION),
                 PictureIndexConverter.getPictureByIndex((int) indexPic),
                 (boolean) doc.get(Fields.LIKE),
                 timeStamp.toDate());
