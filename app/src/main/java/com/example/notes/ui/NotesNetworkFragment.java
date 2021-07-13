@@ -64,6 +64,11 @@ public class NotesNetworkFragment extends Fragment {
         return new NotesNetworkFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -83,11 +88,10 @@ public class NotesNetworkFragment extends Fragment {
         initView(view);
 
         setHasOptionsMenu(true);
-
         data = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
             @Override
-            public void initialized(CardsSource cardsData) {
-                adapter.notifyDataSetChanged();
+            public void initialized(CardsSource cardsSource) {
+               // adapter.notifyDataSetChanged();
             }
         });
         adapter.setDataSource(data);

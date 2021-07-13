@@ -36,10 +36,7 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
         this.fragment = fragment;
     }
 
-    public void setDataSource(CardsSource dataSource) {
-        this.dataSource = dataSource;
-        notifyDataSetChanged();
-    }
+
 
     // Создать новый элемент пользовательского интерфейса
     // Запускается менеджером
@@ -143,6 +140,11 @@ public class NotesNetworkAdapter extends RecyclerView.Adapter<NotesNetworkAdapte
     }
     public int getMenuPosition() {
         return menuPosition;
+    }
+
+    public void setDataSource(CardsSource dataSource) {
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
 
 }
