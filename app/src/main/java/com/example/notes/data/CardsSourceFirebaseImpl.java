@@ -64,7 +64,7 @@ public class CardsSourceFirebaseImpl implements CardsSource {
                 Toast.makeText(context, "get failed with" + e, Toast.LENGTH_SHORT).show();
             }
         });
-        return null;
+        return this;
     }
 
     @Override
