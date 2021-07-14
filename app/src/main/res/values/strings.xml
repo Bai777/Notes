@@ -47,6 +47,7 @@
     <string name="dateText">TextView</string>
 
     <string name="continue_">Continue...</string>
+    <string name="sign_out">Exit</string>
 
 
 </resources>
