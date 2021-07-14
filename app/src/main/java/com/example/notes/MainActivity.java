@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.notes.observe.Publisher;
 import com.example.notes.ui.NotesNetworkFragment;
+import com.example.notes.ui.StartFragment;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigation = new Navigation(getSupportFragmentManager());
-        getNavigation().addFragment(NotesNetworkFragment.newInstance(), false);
+//        getNavigation().addFragment(NotesNetworkFragment.newInstance(), false);
+        getNavigation().addFragment(StartFragment.newInstance(), false);
         initView();
     }
 
