@@ -1,86 +1,59 @@
-package com.example.notes.data;
+package com.example.notes.data
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.os.Parcel
+import android.os.Parcelable
+import android.os.Parcelable.Creator
+import java.util.*
 
-import java.util.Date;
+class CardData : Parcelable {
+    var id : String? = null             // идентификатор записи
+    var title   : String?               // заголовок
+    private set
+    var description : String?           // описание
+    private set
+    var picture   : Int                 // изображение
+    private set
+    var isLike    : Boolean             // флажок
+    private set
+    var date   : Date                   // дата
+    private set
 
-public class CardData implements Parcelable {
-    private String id;           // идентификатор записи
-    private String title;       // заголовок
-    private String description; // описание
-    private int picture;        // изображение
-    private boolean like;       // флажок
-    private Date date;          // дата
-
-
-    public CardData(String title, String description, int picture, boolean like, Date date) {
-        this.title = title;
-        this.description = description;
-        this.picture = picture;
-        this.like = like;
-        this.date = date;
+    constructor(title: String?, description: String?, picture: Int, like: Boolean, date: Date) {
+        this.title = title
+        this.description = description
+        this.picture = picture
+        isLike = like
+        this.date = date
     }
 
-    protected CardData(Parcel in) {
-        title = in.readString();
-        description = in.readString();
-        picture = in.readInt();
-        like = in.readByte() != 0;
-        date = new Date(in.readLong());
+    protected constructor(`in`: Parcel) {
+        title = `in`.readString()
+        description = `in`.readString()
+        picture = `in`.readInt()
+        isLike = `in`.readByte().toInt() != 0
+        date = Date(`in`.readLong())
     }
 
-    public static final Creator<CardData> CREATOR = new Creator<CardData>() {
-        @Override
-        public CardData createFromParcel(Parcel in) {
-            return new CardData(in);
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(title)
+        dest.writeString(description)
+        dest.writeInt(picture)
+        dest.writeByte((if (isLike) 1 else 0).toByte())
+        dest.writeLong(date.time)
+    }
+
+
+    companion object CREATOR : Creator<CardData> {
+        override fun createFromParcel(parcel: Parcel): CardData {
+            return CardData(parcel)
         }
 
-        @Override
-        public CardData[] newArray(int size) {
-            return new CardData[size];
+        override fun newArray(size: Int): Array<CardData?> {
+            return arrayOfNulls(size)
         }
-    };
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getPicture() {
-        return picture;
-    }
-
-    public boolean isLike() {
-        return like;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeInt(picture);
-        dest.writeByte((byte) (like ? 1 : 0));
-        dest.writeLong(date.getTime());
     }
 }

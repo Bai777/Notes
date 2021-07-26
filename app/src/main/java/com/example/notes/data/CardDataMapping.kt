@@ -1,39 +1,41 @@
-package com.example.notes.data;
+package com.example.notes.data
 
-import com.google.firebase.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.Timestamp
+import java.util.*
 
-public class CardDataMapping {
-    public static class Fields{
-        public final static String PICTURE = "picture";
-        public final static String DATE = "date";
-        public final static String TITLE = "title";
-        public final static String DESCRIPTION = "description";
-        public final static String LIKE = "like";
-
-    }
-    public static CardData toCardData(String id, Map<String, Object> doc){
-        long indexPic = (long)doc.get(Fields.PICTURE);
-        Timestamp timeStamp = (Timestamp)doc.get(Fields.DATE);
-        CardData answer = new CardData((String) doc.get(Fields.TITLE),
-                (String) doc.get(Fields.DESCRIPTION),
-                PictureIndexConverter.getPictureByIndex((int) indexPic),
-                (boolean) doc.get(Fields.LIKE),
-                timeStamp.toDate());
-        answer.setId(id);
-        return answer;
+object CardDataMapping {
+    @JvmStatic
+    fun toCardData(id: String?, doc: Map<String?, Any?>): CardData {
+        val indexPic = doc[Fields.PICTURE] as Long
+        val timeStamp = doc[Fields.DATE] as Timestamp?
+        val answer = CardData(
+            doc[Fields.TITLE] as String?,
+            doc[Fields.DESCRIPTION] as String?,
+            PictureIndexConverter.getPictureByIndex(indexPic.toInt()),
+            doc[Fields.LIKE] as Boolean,
+            timeStamp!!.toDate()
+        )
+        answer.id = id
+        return answer
     }
 
-    public static Map<String, Object> toDocument(CardData cardData){
-        Map<String, Object> answer = new HashMap<>();
-        answer.put(Fields.TITLE, cardData.getTitle());
-        answer.put(Fields.DESCRIPTION, cardData.getDescription());
-        answer.put(Fields.PICTURE,
-                PictureIndexConverter.getIndexByPicture(cardData.getPicture()));
-        answer.put(Fields.LIKE, cardData.isLike());
-        answer.put(Fields.DATE, cardData.getDate());
-        return answer;
+    @JvmStatic
+    fun toDocument(cardData: CardData): Map<String, Any?> {
+        val answer: MutableMap<String, Any?> = HashMap()
+        answer[Fields.TITLE] = cardData.title
+        answer[Fields.DESCRIPTION] = cardData.description
+        answer[Fields.PICTURE] =
+            PictureIndexConverter.getIndexByPicture(cardData.picture)
+        answer[Fields.LIKE] = cardData.isLike
+        answer[Fields.DATE] = cardData.date
+        return answer
+    }
 
+    object Fields {
+        const val PICTURE = "picture"
+        const val DATE = "date"
+        const val TITLE = "title"
+        const val DESCRIPTION = "description"
+        const val LIKE = "like"
     }
 }
