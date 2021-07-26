@@ -1,81 +1,75 @@
-package com.example.notes.data;
+package com.example.notes.data
 
-import android.content.res.Resources;
-import android.content.res.TypedArray;
+import android.content.res.Resources
+import com.example.notes.R
+import java.util.*
 
-import com.example.notes.R;
+class CardsSourceImpl(resources: Resources) : CardsSource {
+    private val dataSource: MutableList<CardData?>
+    private val resources // ресурсы приложения
+            : Resources
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-public class CardsSourceImpl implements CardsSource {
-
-    private List<CardData> dataSource;
-    private Resources resources; // ресурсы приложения
-
-    public CardsSourceImpl(Resources resources) {
-        dataSource = new ArrayList<>(7);
-        this.resources = resources;
-    }
-
-    public CardsSource init(CardsSourceResponse cardsSourceResponse) {
+    override fun init(cardsSourceResponse: CardsSourceResponse?): CardsSource? {
         // строки заголовков из ресурсов
-        String[] titles = resources.getStringArray(R.array.titles);
+        val titles = resources.getStringArray(R.array.titles)
         // строки описаний из ресурсов
-        String[] descriptions = resources.getStringArray(R.array.descriptions);
+        val descriptions = resources.getStringArray(R.array.descriptions)
         // изображения
-        int[] pictures = getImageArray();
+        val pictures = imageArray
         // заполнение источника данных
-        for (int i = 0; i < descriptions.length; i++) {
-            dataSource.add(new CardData(titles[i], descriptions[i], pictures[i], false, Calendar.getInstance().getTime()));
+        for (i in descriptions.indices) {
+            dataSource.add(
+                CardData(
+                    titles[i],
+                    descriptions[i],
+                    pictures[i],
+                    false,
+                    Calendar.getInstance().time
+                )
+            )
         }
-
-        if (cardsSourceResponse != null){
-            cardsSourceResponse.initialized(this);
-        }
-
-        return this;
+        cardsSourceResponse?.initialized(this)
+        return this
     }
 
     // Механизм вытаскивания идентификаторов картинок
-    private int[] getImageArray() {
-        TypedArray pictures = resources.obtainTypedArray(R.array.pictures);
-        int length = pictures.length();
-        int[] answer = new int[length];
-        for (int i = 0; i < length; i++) {
-            answer[i] = pictures.getResourceId(i, 0);
+    private val imageArray: IntArray
+        private get() {
+            val pictures = resources.obtainTypedArray(R.array.pictures)
+            val length = pictures.length()
+            val answer = IntArray(length)
+            for (i in 0 until length) {
+                answer[i] = pictures.getResourceId(i, 0)
+            }
+            return answer
         }
-        return answer;
+
+    override fun getCardData(position: Int): CardData? {
+        return dataSource[position]
     }
 
-    @Override
-    public CardData getCardData(int position) {
-        return dataSource.get(position);
+    override fun size(): Int {
+        return dataSource.size
     }
 
-    @Override
-    public int size() {
-        return dataSource.size();
+    override fun deleteCardData(position: Int) {
+        dataSource.removeAt(position)
     }
 
-    @Override
-    public void deleteCardData(int position) {
-        dataSource.remove(position);
+    override fun addCardData(cardData: CardData?) {
+        dataSource.add(cardData)
     }
 
-    @Override
-    public void addCardData(CardData cardData) {
-        dataSource.add(cardData);
+    override fun clearCardData() {
+        dataSource.clear()
     }
 
-    @Override
-    public void clearCardData() {
-        dataSource.clear();
+    override fun updateCardData(position: Int, cardData: CardData?) {
+        dataSource[position] = cardData
     }
 
-    @Override
-    public void updateCardData(int position, CardData cardData) {
-        dataSource.set(position, cardData);
+    init {
+        dataSource = ArrayList(7)
+        this.resources = resources
     }
 }
