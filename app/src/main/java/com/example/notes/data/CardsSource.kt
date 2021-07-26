@@ -1,16 +1,11 @@
-package com.example.notes.data;
+package com.example.notes.data
 
-public interface CardsSource {
-    CardsSource init(CardsSourceResponse cardsSourceResponse);
-    CardData getCardData(int position);
-
-    int size();
-
-    void deleteCardData(int position);
-
-    void addCardData(CardData cardData);
-
-    void clearCardData();
-
-    void updateCardData(int position, CardData cardData);
+interface CardsSource {
+    fun init(cardsSourceResponse: CardsSourceResponse?): CardsSource?
+    fun getCardData(position: Int): CardData?
+    fun size(): Int
+    fun deleteCardData(position: Int)
+    fun addCardData(cardData: CardData?)
+    fun clearCardData()
+    fun updateCardData(position: Int, cardData: CardData?)
 }

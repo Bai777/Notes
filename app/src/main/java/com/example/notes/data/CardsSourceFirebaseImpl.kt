@@ -1,116 +1,88 @@
-package com.example.notes.data;
+package com.example.notes.data
 
-import android.content.Context;
-import android.widget.Toast;
+import android.content.Context
+import android.widget.Toast
+import com.example.notes.data.CardDataMapping.toCardData
+import com.example.notes.data.CardDataMapping.toDocument
+import com.google.firebase.firestore.*
+import java.util.*
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-public class CardsSourceFirebaseImpl implements CardsSource {
-
-    private static final String CARDS_COLLECTION = "notes";
-    Context context;
+class CardsSourceFirebaseImpl : CardsSource {
+    var context: Context? = null
 
     // База данных Firestore
-    private FirebaseFirestore store = FirebaseFirestore.getInstance();
+    private val store = FirebaseFirestore.getInstance()
 
     // Коллекция документов
-    private CollectionReference collection = store.collection(CARDS_COLLECTION);
+    private val collection = store.collection(CARDS_COLLECTION)
 
     // Загружаемый список карточек
-    private List<CardData> cardsData = new ArrayList<CardData>();
-
-    @Override
-    public CardsSource init(final CardsSourceResponse cardsSourceResponse) {
+    private var cardsData: MutableList<CardData>? = ArrayList()
+    override fun init(cardsSourceResponse: CardsSourceResponse?): CardsSource? {
         // Получить всю коллекцию, отсортированную по полю (дата)
         collection.orderBy(CardDataMapping.Fields.DATE, Query.Direction.DESCENDING).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    // При удачном считывании данных загрузим список карточек
+            .addOnCompleteListener { task ->
 
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            cardsData = new ArrayList<CardData>();
-                            for (QueryDocumentSnapshot document :
-                                    task.getResult()) {
-                                Map<String, Object> doc = document.getData();
-                                String id = document.getId();
-                                CardData cardData = CardDataMapping.toCardData(id, doc);
-                                cardsData.add(cardData);
-                            }
-
-                            cardsSourceResponse.initialized(CardsSourceFirebaseImpl.this);
-                        } else {
-                            Toast.makeText(context, (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
-                        }
+                // При удачном считывании данных загрузим список карточек
+                if (task.isSuccessful) {
+                    cardsData = ArrayList()
+                    for (document in task.result!!) {
+                        val doc = document.data
+                        val id = document.id
+                        val cardData = toCardData(id, doc)
+                        (cardsData as ArrayList<CardData>).add(cardData)
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "get failed with" + e, Toast.LENGTH_SHORT).show();
+                    cardsSourceResponse!!.initialized(this@CardsSourceFirebaseImpl)
+                } else {
+                    Toast.makeText(context, task.exception as CharSequence?, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }.addOnFailureListener { e ->
+                Toast.makeText(
+                    context,
+                    "get failed with$e",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        });
-        return this;
+        return this
     }
 
-    @Override
-    public CardData getCardData(int position) {
-        return cardsData.get(position);
+    override fun getCardData(position: Int): CardData? {
+        return cardsData!![position]
     }
 
-    @Override
-    public int size() {
-        if (cardsData == null) {
-            return 0;
-        }
-        return cardsData.size();
+    override fun size(): Int {
+        return if (cardsData == null) {
+            0
+        } else cardsData!!.size
     }
 
-    @Override
-    public void deleteCardData(int position) {
+    override fun deleteCardData(position: Int) {
         // Удалить документ с определённым идентификатором
-        collection.document(cardsData.get(position).getId()).delete();
-        cardsData.remove(position);
+        collection.document(cardsData!![position].id!!).delete()
+        cardsData!!.removeAt(position)
     }
 
-    @Override
-    public void addCardData(CardData cardData) {
+    override fun addCardData(cardData: CardData?) {
         // Добавить документ
-        collection.add(CardDataMapping.toDocument(cardData)).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                cardData.setId(documentReference.getId());
-            }
-        });
-
+        collection.add(toDocument(cardData!!))
+            .addOnSuccessListener { documentReference -> cardData.id = documentReference.id }
     }
 
-    @Override
-    public void clearCardData() {
-        for (CardData cardData: cardsData) {
-            collection.document(cardData.getId()).delete();
+    override fun clearCardData() {
+        for (cardData in cardsData!!) {
+            collection.document(cardData.id!!).delete()
         }
-        cardsData = new ArrayList<CardData>();
+        cardsData = ArrayList()
     }
 
-    @Override
-    public void updateCardData(int position, CardData cardData) {
-        String id = cardData.getId();
+    override fun updateCardData(position: Int, cardData: CardData?) {
+        val id = cardData!!.id
         // Изменить документ по идентификатору
-        collection.document(id).set(CardDataMapping.toDocument(cardData));
+        collection.document(id!!).set(toDocument(cardData))
+    }
+
+    companion object {
+        private const val CARDS_COLLECTION = "notes"
     }
 }
