@@ -1,22 +1,31 @@
 package com.example.notes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.notes.ui.NotesNetworkFragment;
+
 
 public class NoteTitleFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
+
+
+
     private int currentPosition = 0;
     private boolean isLandscape;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,22 +40,41 @@ public class NoteTitleFragment extends Fragment {
         initList(view);
     }
 
+
+
     private void initList(View view) {
         LinearLayout linearLayout = (LinearLayout) view;
         String[] notesTitle = getResources().getStringArray(R.array.note_title);
+
+        // При помощи этого объекта будем доставать элементы, спрятанные в item.xml
+        LayoutInflater inflater = getLayoutInflater();
+
+        // В этом цикле ищем элемент TextView в list_item.xml,
+        // заполняем его значениями
+        // и добавляем на экран item.xml.
+        // Кроме того, создаём обработку касания на элемент
         for (int i = 0; i < notesTitle.length; i++) {
             String notes = notesTitle[i];
-            TextView textViewNotesTitle = new TextView(getContext());
-            textViewNotesTitle.setText(notes);
-            textViewNotesTitle.setTextSize(30);
-            linearLayout.addView(textViewNotesTitle);
+
+//            TextView textViewNotesTitle = new TextView(getContext());
+//            textViewNotesTitle.setText(notes);
+//            textViewNotesTitle.setTextSize(30);
+//            linearLayout.addView(textViewNotesTitle);
+            // Достаём элемент из list_item.xml
+            View item = inflater.inflate(R.layout.list_item, linearLayout, false);
+            // Находим в этом элементе TextView
+            TextView tv = item.findViewById(R.id.title);
+            tv.setText(notes);
+            linearLayout.addView(item);
+
             final int NUM = i;
-            textViewNotesTitle.setOnClickListener(v -> {
+            tv.setOnClickListener(v -> {
                currentPosition = NUM;
                 showNoteAndData(currentPosition);
             });
         }
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -58,6 +86,7 @@ public class NoteTitleFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         isLandscape = getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
@@ -79,12 +108,12 @@ public class NoteTitleFragment extends Fragment {
         }
     }
 
-    private void showLandNoteAndData(int num) {
+    public void showLandNoteAndData(int num) {
         NoteDescriptionFragment displayNotes = NoteDescriptionFragment.newInstance(num);
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.landDisplayDescriptAndData, displayNotes).commit();
     }
 
-    private void showPortNoteAndData(int num) {
+    public void showPortNoteAndData(int num) {
         Intent intent = new Intent(getActivity(), DisplayingTheDescriptionOfNotes.class);
         intent.putExtra(NoteDescriptionFragment.ARG_INDEX, num);
         startActivity(intent);
